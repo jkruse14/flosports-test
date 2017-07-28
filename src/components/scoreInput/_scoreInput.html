@@ -1,0 +1,7 @@
+<div class="form-group">
+    <label for="team_score">Score</label>
+    <input type="number" class="form-control" id="team_score" placeholder="Score" value={score} />
+    <span class='input-group-btn'>
+        <button ng-repeat='button in vm.buttons' type='button'>{{button.display}}</button>
+    </span>
+</div>

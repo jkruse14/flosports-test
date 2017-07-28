@@ -1,0 +1,18 @@
+Create a single page application using Angular 4 and hosted on Firebase hosting. It should have two screens with tabbed navigation.
+
+The first tab should be for data input and have the following:
+
+Team 1 (text box)
+Team 2 (text box)
+Team 1 Score (some sort of numeric incrementing field) 
+Team 2 Score (some sort of numeric incrementing field) 
+Team 1 Color (some sort of color selection)
+Team 2 Color (some sort of color selection)
+Clock where you can set the starting time and a button to start the countdown, stopping at zero
+
+The second tab should display the result of each team’s name and score. The score should have 
+the background color that was selected on the first tab for that screen. The clock should also 
+display in minutes:seconds format and count down in one second intervals.
+
+The first tab should not update the second tab directly, instead it should update Firebase, and 
+the second tab should subscribe to that Firebase endpoint and display the values.

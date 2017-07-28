@@ -1,0 +1,20 @@
+<div>
+  <div id="firebaseui-auth-container" ng-show="vm.showLogin === true"></div>
+  <uib-tabset active="activeJustified" justified="true" ng-show="vm.showLogin === false">
+    <uib-tab index="0" heading="Update Matchup">
+      
+      <div id="unstarted-matchup" ng-show="vm.creatingNewMatchup === true">
+        <matchup home-team='vm.unstartedMatch.homeTeam' away-team='vm.unstartedMatch.awayTeam' unstarted="true"></matchup>
+      </div>
+      <button class="btn btn-primary" type='button' ng-click="vm.createNewMatchup()" ng-show='vm.creatingNewMatchup === false'>Create New Matchup</button>
+      
+      <div id='update-active-matchups' ng-show='vm.matchupsLoaded === true'>
+        <matchup ng-repeat='matchup in vm.matchups' matchup='matchup'
+                                                    unstarted='false'
+                                                    editable='true'></matchup>
+      </div>
+    </uib-tab>
+    <uib-tab index="1" heading="Scoreboard">
+      <scoreboard></scoreboard>
+    </uib-tab>
+  </uib-tabset>
