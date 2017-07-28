@@ -1,11 +1,12 @@
-<div class='matchup-container'>
+<div class='matchup-container row'>
     <div class='matchup-team-container'>
         <team name='vm.matchup.homeTeam.name' 
               color='vm.matchup.homeTeam.color'
               home-or-away='vm.HOME'
               update-team="vm.updateTeam"
-              editable="vm.teamsEditable"></team>
-        <form>
+              editable="vm.teamsEditable"
+              class="col-xs-4"></team>
+        <form class="inc-score col-xs-4">
             <div class="form-group">
                 <label for="team_score">Score</label>
                 <div class='input-group'>
@@ -22,8 +23,9 @@
               color='vm.matchup.awayTeam.color' 
               home-or-away='vm.AWAY'
               update-team="vm.updateTeam"
-              editable='vm.teamsEditable'></team>
-        <form>
+              editable='vm.teamsEditable'
+              class="col-xs-4"></team>
+        <form class="inc-score col-xs-4">
             <div class="form-group">
                 <label for="team_score">Score</label>
                 <div class='input-group'>

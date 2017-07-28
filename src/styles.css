@@ -1,15 +1,31 @@
+main {
+  padding: 10px;
+}
+
+.tab-content {
+  border: 1px solid lightgrey;
+  border-top: none;
+  border-radius: 3px;
+  height: 100%;
+}
+
 .matchup-container {
   position: relative;
   width: 60%;
-  margin: 0px auto;
+  margin: 5px auto;
+  padding: 5px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
 }
 
-team,.matchup-team-container{
+team,.matchup-team-container,.inc-score{
     display: inline-block;
-    width: 40%;
-    margin: 20px 25px
 }
 
+
+/*** color picker ***/
+
+/*use webpack here instead*/
 .colorpicker-visible,
 .colorpicker-visible .dropdown-menu {
   display: block !important;
