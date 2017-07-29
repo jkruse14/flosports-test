@@ -15,7 +15,6 @@ import template from './_matchup.html'
 
         vm.$onInit = onInit;
         vm.incrementScore = incrementScore;
-        vm.addMatchup = addMatchup;
         vm.updateTeam = updateTeam;
         vm.toggleTimerRunning = toggleTimerRunning
         vm.setTimerRunning = setTimerRunning;
@@ -25,9 +24,8 @@ import template from './_matchup.html'
             vm.HOME = HOME;
             vm.AWAY = AWAY;
             
-            vm.teamsEditable = vm.unstarted;
-
-            
+            vm.teamsEditable = vm.unstarted;  
+            vm.matchups = matchupsFactory;  
         }
 
         function onChanges(changes) {
@@ -67,25 +65,13 @@ import template from './_matchup.html'
             }
         }
 
-        function addMatchup(home, away) {
-            //TODO:make sure both teams do not have any active matchups
-            vm.matchups.$add({
-                homeTeam: vm.homeTeam,
-                home_score: vm.home_score,
-                awayTeam: vm.awayTeam,
-                away_score: vm.away_score,
-                timer_running: false
-            })
-        }
-
         function updateTeam(team, prop, value) {
             if(team === HOME) {
-                vm.homeTeam[prop] = value;
+                vm.matchup.homeTeam[prop] = value;
             } else if(team === AWAY) {
-                vm.awayTeam[prop] = value;
+                vm.matchup.awayTeam[prop] = value;
             }
         }
-
-        
     }
+
 })();

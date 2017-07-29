@@ -12,7 +12,8 @@ import template from './_matchup.html'
                 matchup: '<',
                 unstarted: '<',
                 final:     '<',
-                editable:  '<'
+                editable:  '<',
+                inModal: '<'
             }
         });
 
