@@ -57,7 +57,7 @@
             return floAuthService.login(user)
                 .then(function() {
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, {});
-                    $location.path('/citytimer');
+                    $location.path('/');
                 })
                 .catch(function(error) {
                     vm.error = error;

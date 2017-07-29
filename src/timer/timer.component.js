@@ -27,7 +27,7 @@ function TimerController($interval, $scope) {
 
     function onInit() {
         //default to 30 minutes
-        vm.countdown_start = vm.countdownStart === undefined ? 1800 : vm.countdownStart 
+        vm.countdownStart = vm.countdownStart === undefined ? 1800 : vm.countdownStart * 60 //convert to seconds
         vm.time_remaining = vm.countdownStart;
         vm.minutes = Math.floor(vm.time_remaining / 60)
         vm.seconds = vm.time_remaining - (vm.minutes * 60);
