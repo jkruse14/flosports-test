@@ -6,7 +6,7 @@
               update-team="vm.updateTeam"
               editable="vm.teamsEditable"
               class="col-xs-4"></team>
-        <form class="inc-score col-xs-4">
+        <form class="inc-score col-xs-4" ng-hide="vm.inModal === true">
             <div class="form-group">
                 <label for="team_score">Score</label>
                 <div class='input-group'>
@@ -14,7 +14,6 @@
                            ng-model='vm.matchup.home_score' ng-readonly="vm.editable === false">
                     <span class='input-group-btn' ng-show='vm.editable === true'><button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.HOME, 1)" >Increment</button></span>
                 </div>
-                <p class="help-block" ng-show="vm.matchup.timer_running === false">Match is currently paused</p>
             </div>
         </form>
     </div>
@@ -25,23 +24,34 @@
               update-team="vm.updateTeam"
               editable='vm.teamsEditable'
               class="col-xs-4"></team>
-        <form class="inc-score col-xs-4">
+        <form class="inc-score col-xs-4" ng-hide="vm.inModal === true">
             <div class="form-group">
                 <label for="team_score">Score</label>
                 <div class='input-group'>
                     <input type="number" class="form-control" id="team_score" placeholder="Score" ng-model='vm.matchup.away_score' ng-readonly="vm.editable === false">
                     <span class='input-group-btn' ng-show='vm.editable === true'>
                         <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.AWAY, 1)" 
-                                                                        ng-disabled="vm.matchup.timer_runningl === false">Increment</button>
+                                                                        ng-disabled="vm.matchup.timer_running === false">Increment</button>
                     </span>
                 </div>
                 <p class="help-block" ng-show="vm.matchup.timer_running === false">Match is currently paused</p>
             </div>
         </form>
     </div>
-    <button type='button' class='btn btn-primary' ng-click='vm.addMatchup()' ng-show="vm.unstarted === true" ng-disabled="!vm.homeTeam.name && !vm.awayTeam.name">Save and Start Matchup</button>
-    <div id="timer-container">
-        <timer countdown-start='3650' timer-running='vm.matchup.timer_running'></timer>
+    <form id="match-time-form" ng-if='vm.inModal === true'>
+        <div class="form-group">
+            <label for="team_score">Match Time</label>
+            <div class='input-group'>
+                <input type="number" class="form-control" id="match-time" placeholder="Score" ng-model='vm.match_time'>
+            </div>
+            <p class="help-block">Total time for the match (minutes)</p>
+        </div>
+    </form>
+    <button type='button' class='btn btn-primary' ng-click='vm.addMatchup()' 
+                                                  ng-show="vm.unstarted === true" 
+                                                  ng-disabled="!vm.matchup.homeTeam.name && !vm.matchup.awayTeam.name">Save Matchup</button>
+    <div id="timer-container" ng-hide="vm.inModal === true">
+        <timer countdown-start='vm.matchup.match_time' timer-running='vm.matchup.timer_running'></timer>
         <button class='btn btn-primary' ng-click='vm.setTimerRunning(!vm.matchup.timer_running)' ng-if='vm.editable'>{{vm.matchup.timer_running === true ? 'Pause ' : 'Start '}}Match</button> 
     </div>
 </div>

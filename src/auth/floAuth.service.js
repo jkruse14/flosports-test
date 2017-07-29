@@ -35,7 +35,6 @@
         }
 
         function logout() {
-            cityTimerService.reset();
             firebaseAuthObject.$signOut();
         }
 

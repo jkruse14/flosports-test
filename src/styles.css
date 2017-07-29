@@ -22,6 +22,15 @@ team,.matchup-team-container,.inc-score{
     display: inline-block;
 }
 
+#createMatchupModal>div {
+  width: 100%;
+  border: none;
+}
+
+#match-time-form {
+  padding-left: 15px;
+}
+
 
 /*** color picker ***/
 

@@ -7,39 +7,71 @@
 
     TimerController.$inject = ['$interval'];
 
-    function TimerController($interval) {
-        let vm = this;
-        let endInterval;
+function TimerController($interval, $scope) {
+    let vm = this;
+    let endInterval;
 
-        vm.$onInit = onInit;
-        vm.startTimer = startTimer;
-        vm.stopTimer = stopTimer;
+    vm.$onInit = onInit;
+    vm.startTimer = startTimer;
+    vm.stopTimer = stopTimer;
 
-        function onInit() {
-            vm.countdown_start ? vm.countdown_start : 1800 //30 minutes
-            vm.time_remaining = vm.countdown_start;
-            vm.minutes = vm.time_remaining % 60
-            vm.seconds = vm.time_remaining - (vm.minutes * 60);
-        }
-        
+    function onInit() {
+        //default to 30 minutes
+        vm.countdown_start = vm.countdownStart === undefined
+            ? 1800
+            : vm.countdownStart
+        vm.time_remaining = vm.countdownStart;
+        vm.minutes = Math.floor(vm.time_remaining / 60)
+        vm.seconds = vm.time_remaining - (vm.minutes * 60);
+        vm.minutes = vm.minutes < 10
+            ? '0' + vm.minutes
+            : vm.minutes
+        vm.seconds = vm.seconds < 10
+            ? '0' + vm.seconds
+            : vm.seconds
+    }
 
-        function startTimer() {
-            endInterval = $interval(updateTimer, 1000, vm.countdown_start)
-        }
+    function startTimer(start_time) {
+        endInterval = $interval(updateTimer, 1000, start_time)
+    }
 
-        function updateTimer() {
-            vm.time_remaining -= 1;
-            
+    function updateTimer() {
+        vm.time_remaining -= 1;
+        vm.minutes = Math.floor(vm.time_remaining / 60)
+        vm.seconds = vm.time_remaining - (vm.minutes * 60);
+        vm.minutes = vm.minutes < 10
+            ? '0' + vm.minutes
+            : vm.minutes
+        vm.seconds = vm.seconds < 10
+            ? '0' + vm.seconds
+            : vm.seconds
 
-            if(vm.time_remaining === 0) {
-                stopTimer();
-            }
-        }
-
-        function stopTimer(){
-            if(angular.isDefined(endInterval)){
-                $interval.cancel(endInterval);
-            }
+        if (vm.time_remaining === 0) {
+            stopTimer();
         }
     }
+
+    function stopTimer() {
+        if (angular.isDefined(endInterval)) {
+            $interval.cancel(endInterval);
+        }
+    }
+
+    function setRunning(running) {
+        vm.running = running;
+        if (running === true) {
+            startTimer(vm.countdown_start)
+        } else if (running === false) {
+            if (vm.time_remaining !== 0) {
+                vm.countdown_start = vm.time_remaining
+            }
+            stopTimer();
+        }
+    }
+
+    $scope
+        .$watch('vm.timerRunning', function () {
+            setRunning(vm.timerRunning)
+        })
+}
 });
