@@ -5,5 +5,6 @@
     <h4 class="modal-title">Create New Matchup</h4>
 </div>
 <div class='modal-body'>
-    <matchup id='createMatchupModal' matchup='{homeTeam:{},awayTeam:{}}' unstarted="true" in-modal='true'></matchup>
+    <matchup id='createMatchupModal' matchup='vm.matchup' unstarted="true" in-modal='true'></matchup>
+    <button type='button' class='btn btn-primary' ng-click='vm.addMatchup()' ng-disabled="!vm.matchup.homeTeam.name && !vm.matchup.awayTeam.name">Save Matchup</button>
 </div>

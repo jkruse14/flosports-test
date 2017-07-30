@@ -13,7 +13,6 @@
         vm.matchups = scoreboardFactory;
     
         vm.matchups.$loaded().then(function(matchups){
-            //vm.matchups = matchups
             vm.matchupsLoaded = true;
         });
     }
