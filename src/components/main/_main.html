@@ -1,11 +1,8 @@
-  <div id="firebaseui-auth-container" ng-show="vm.showLogin === true"></div>
+  <div id="firebaseui-auth-container" ng-hide="vm.showLogin === true"></div>
   <uib-tabset active="activeJustified" justified="true" ng-show="vm.showLogin === false">
     <uib-tab index="0" heading="Update Matchup">
       
-      <!-- <div id="unstarted-matchup" ng-show="vm.creatingNewMatchup === true">
-        
-      </div> -->
-      <button class="btn btn-primary" type='button' ng-click="vm.showModal()" ng-show='vm.creatingNewMatchup === false'>Create New Matchup</button>
+      <button class="btn btn-primary" type='button' ng-click="vm.showCreateMatchupModal()" ng-show='vm.creatingNewMatchup === false'>Create New Matchup</button>
       
       <div id='update-active-matchups' ng-show='vm.matchupsLoaded === true'>
         <matchup ng-repeat='matchup in vm.matchups' matchup='matchup'

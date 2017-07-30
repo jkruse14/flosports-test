@@ -18,6 +18,7 @@
     "webpack-dev-server": "^2.6.1"
   },
   "devDependencies": {
+    "angular-mocks": "^1.6.5",
     "babel-core": "^6.25.0",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.1.1",
@@ -38,6 +39,7 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.0",
     "karma-spec-reporter": "0.0.31",
+    "karma-webpack": "^2.0.4",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "style-loader": "^0.18.2",
