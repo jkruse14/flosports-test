@@ -50,8 +50,13 @@
     <button type='button' class='btn btn-primary' ng-click='vm.addMatchup()' 
                                                   ng-show="vm.unstarted === true" 
                                                   ng-disabled="!vm.matchup.homeTeam.name && !vm.matchup.awayTeam.name">Save Matchup</button>
-    <div id="timer-container" ng-hide="vm.inModal === true">
-        <timer countdown-start='vm.matchup.match_time' timer-running='vm.matchup.timer_running'></timer>
+    <div id="timer-container" ng-hide="vm.inModal === true || vm.matchup.final === true">
+        <timer countdown-start='vm.matchup.match_time' 
+               timer-running='vm.matchup.timer_running'
+               timer-obj-id='vm.matchup.$id'></timer>
         <button class='btn btn-primary' ng-click='vm.setTimerRunning(!vm.matchup.timer_running)' ng-if='vm.editable'>{{vm.matchup.timer_running === true ? 'Pause ' : 'Start '}}Match</button> 
+    </div>
+    <div id='final-span-container'>
+        <span id='final-span'>Final</span>
     </div>
 </div>

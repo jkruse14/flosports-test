@@ -6,9 +6,9 @@ import template from './_matchup.html'
         .module('flosports-test')
         .controller('MatchupController', MatchupController)
     
-    MatchupController.$inject = ['matchupsFactory'];
+    MatchupController.$inject = ['matchupsFactory', '$rootScope'];
 
-    function MatchupController(matchupsFactory) {
+    function MatchupController(matchupsFactory, $rootScope) {
         let vm = this;
         const HOME = 'home';
         const AWAY = 'away';
@@ -72,6 +72,12 @@ import template from './_matchup.html'
                 vm.matchup.awayTeam[prop] = value;
             }
         }
+
+        $rootScope.$on('FLOWTIMER_END', function(matchId){
+            let match = matchupsFactory.$getRecord(matchId)
+            match.final = true;
+            matchupsFactory.$save(match);
+        })
     }
 
 })();

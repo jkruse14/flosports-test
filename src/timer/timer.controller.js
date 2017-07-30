@@ -5,9 +5,9 @@
         .module('floTimer')
         .controller('TimerController', TimerController)
 
-    TimerController.$inject = ['$interval'];
+    TimerController.$inject = ['$interval', '$rootScope'];
 
-function TimerController($interval, $scope) {
+function TimerController($interval, $rootScope) {
     let vm = this;
     let endInterval;
 
@@ -48,6 +48,7 @@ function TimerController($interval, $scope) {
 
         if (vm.time_remaining === 0) {
             stopTimer();
+            $rootScope.$broadcast('FLOTIMER_END',vm.timerObjId)
         }
     }
 

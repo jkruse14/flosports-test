@@ -11,7 +11,8 @@ import template from './_timer.html';
             controllerAs: 'vm',
             bindings: {
                 countdownStart: '<', //in seconds
-                timerRunning: '<'
+                timerRunning: '<',
+                timerObjId: '@'
             }
         })
 
