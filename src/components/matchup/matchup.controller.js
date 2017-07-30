@@ -6,18 +6,17 @@ import template from './_matchup.html'
         .module('flosports-test')
         .controller('MatchupController', MatchupController)
     
-    MatchupController.$inject = ['matchupsFactory'];
+    MatchupController.$inject = ['matchupsFactory', '$rootScope'];
 
-    function MatchupController(matchupsFactory) {
+    function MatchupController(matchupsFactory, $rootScope) {
         let vm = this;
         const HOME = 'home';
         const AWAY = 'away';
+        const TEAM_PROPS = {NAME: 'name', COLOR: 'color'};
 
         vm.$onInit = onInit;
         vm.incrementScore = incrementScore;
-        vm.addMatchup = addMatchup;
         vm.updateTeam = updateTeam;
-        vm.toggleTimerRunning = toggleTimerRunning
         vm.setTimerRunning = setTimerRunning;
         vm.$onChanges = onChanges;
 
@@ -25,9 +24,7 @@ import template from './_matchup.html'
             vm.HOME = HOME;
             vm.AWAY = AWAY;
             
-            vm.teamsEditable = vm.unstarted;
-
-            
+            vm.teamsEditable = vm.unstarted;  
         }
 
         function onChanges(changes) {
@@ -39,13 +36,6 @@ import template from './_matchup.html'
                     }
                 })
             }
-        }
-
-        function toggleTimerRunning() {
-            vm.matchup.timer_running = !vm.matchup.timer_running;
-            let syncedElt = matchupsFactory.$getRecord(vm.matchup.$id)
-            syncedElt.timer_running = vm.matchup.timer_running;
-            matchupsFactory.$save(syncedElt);
         }
 
         function setTimerRunning(running) {
@@ -67,25 +57,21 @@ import template from './_matchup.html'
             }
         }
 
-        function addMatchup(home, away) {
-            //TODO:make sure both teams do not have any active matchups
-            vm.matchups.$add({
-                homeTeam: vm.homeTeam,
-                home_score: vm.home_score,
-                awayTeam: vm.awayTeam,
-                away_score: vm.away_score,
-                timer_running: false
-            })
-        }
-
         function updateTeam(team, prop, value) {
-            if(team === HOME) {
-                vm.homeTeam[prop] = value;
-            } else if(team === AWAY) {
-                vm.awayTeam[prop] = value;
+            if(Object.keys(TEAM_PROPS).indexOf(prop.toUpperCase()) !== -1){
+                if(team === HOME) {
+                    vm.matchup.homeTeam[prop] = value;
+                } else if(team === AWAY) {
+                    vm.matchup.awayTeam[prop] = value;
+                }
             }
         }
 
-        
+        $rootScope.$on('FLOWTIMER_END', function(matchId){
+            let match = matchupsFactory.$getRecord(matchId)
+            match.final = true;
+            matchupsFactory.$save(match);
+        })
     }
+
 })();

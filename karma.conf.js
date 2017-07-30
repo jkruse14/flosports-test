@@ -1,5 +1,9 @@
 // Karma configuration
-// Generated on Tue Jul 25 2017 13:41:33 GMT-0500 (CDT)
+var path = require('path');
+var webpackConfig = require('./webpack.config');
+var vendor_entry = path.resolve(webpackConfig.entry.vendor);
+var app_entry = path.resolve(webpackConfig.entry.app);
+var components_entry = path.resolve(webpackConfig.entry.components)
 
 module.exports = function(config) {
   config.set({
@@ -15,25 +19,47 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*.spec.js'
+      'https://www.gstatic.com/firebasejs/4.1.5/firebase.js',
+      vendor_entry,
+      './node_modules/angularfire/dist/angularfire.js',
+      app_entry,
+      components_entry,
+      './node_modules/angular-mocks/angular-mocks.js',
+      'src/index.html',
+      'src/**/*.spec.js',
     ],
-
+    webpack:webpackConfig,
 
     // list of files to exclude
     exclude: [
+      'src/components/**/index.js'
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/**/*.js': ['webpack', 'coverage'],
+      'src/**/*.spec.js': ['webpack']
     },
 
-
+    
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['spec', 'coverage', 'progress'],
+
+    coverageReporter: {
+      reporters: [
+        {
+          type: 'text-summary',
+        },
+        {
+          type: 'html',
+          dir: 'coverage/',
+        }
+      ]
+    },
 
 
     // web server port
@@ -64,6 +90,15 @@ module.exports = function(config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    plugins:[
+      require('karma-webpack'),
+      ('karma-chrome-launcher'),
+      ('karma-babel-preprocessor'),
+      ('karma-coverage'),
+      ('karma-jasmine'),
+      ('karma-spec-reporter')
+    ]
   })
 }
