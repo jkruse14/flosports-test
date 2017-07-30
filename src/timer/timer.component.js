@@ -10,7 +10,7 @@ import template from './_timer.html';
             controller: TimerController,
             controllerAs: 'vm',
             bindings: {
-                countdownStart: '<', //in seconds
+                countdownStart: '<', //in minutes
                 timerRunning: '<',
                 timerObjId: '@'
             }

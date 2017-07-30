@@ -41,7 +41,8 @@ module.exports = {
       { test: /\.spec.js$/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.html$/, loader:'html-loader', exclude: /node_modules/ },
       { test : /\.css$/, loader: 'style-loader!css-loader', exclude: /node_modules/ } // compiles Less to CSS 
-    ]
+    ],
+    
   },
 plugins : [HtmlWebpackPluginConfig, new ExtractTextPlugin("styles.css")]
 }

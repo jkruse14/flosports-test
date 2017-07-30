@@ -42,15 +42,12 @@
         <div class="form-group">
             <label for="team_score">Match Time</label>
             <div class='input-group'>
-                <input type="number" class="form-control" id="match-time" placeholder="Score" ng-model='vm.match_time'>
+                <input type="number" class="form-control" id="match-time" placeholder="Match Time" ng-model='vm.match_time'>
             </div>
             <p class="help-block">Total time for the match (minutes)</p>
         </div>
     </form>
-    <button type='button' class='btn btn-primary' ng-click='vm.addMatchup()' 
-                                                  ng-show="vm.unstarted === true" 
-                                                  ng-disabled="!vm.matchup.homeTeam.name && !vm.matchup.awayTeam.name">Save Matchup</button>
-    <div id="timer-container" ng-hide="vm.inModal === true || vm.matchup.final === true">
+   <div id="timer-container" ng-hide="vm.inModal === true || vm.matchup.final === true">
         <timer countdown-start='vm.matchup.match_time' 
                timer-running='vm.matchup.timer_running'
                timer-obj-id='vm.matchup.$id'></timer>

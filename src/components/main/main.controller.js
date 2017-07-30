@@ -18,20 +18,16 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
   vm.showCreateMatchupModal = showCreateMatchupModal;
 
   function onInit() {
-    console.log('init')
     if(!floAuthService.isLoggedIn()) {
       showLoginModal('md');
     } else {
-      console.log('logged in')
       vm.showLogin = false;
       vm.matchups = matchupsFactory;
       vm.matchups.$loaded().then(function(matchups){
         vm.matchupsLoaded = true;
       })
 
-      vm.creatingNewMatchup = false;
       vm.tabs = [{heading:'Edit Scores'}, {heading:'Scoreboard'}]
-      resetUnstartedMatch();
     }
   }
 
@@ -47,30 +43,10 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
     }
   }
 
-  function createNewMatchup() {
-    if(vm.creatingNewMatchup === false) {
-      vm.creatingNewMatchup = true;
-    } else {
-      if(vm.unstartedMatch.homeTeam.name && vm.unstartedMatch.awayTeam.name) {
-        vm.matchupsFactory.$add(unstartedMatch);
-        vm.creatingNewMatchup = false;
-        resetUnstartedMatch();
-      }
+  function createNewMatchup(match) {
+    if(match.homeTeam.name && match.awayTeam.name) {
+      vm.matchups.$add(match);
     }
-  }
-
-  function resetUnstartedMatch() {
-    vm.unstartedMatch = { homeTeam:{
-                                name:'',
-                                color:''
-                          },
-                          home_score: 0, 
-                          awayTeam:{
-                              name : '',
-                              color : ''
-                        },
-                        away_score : 0
-                      }
   }
 
   function showCreateMatchupModal(size) {
@@ -85,14 +61,14 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
                 scope: $scope
             });
 
-            modalInstance.result.then(function (result) {
-                //Flash.clear();
-                if(result){
-                    
-                }
-            }, function(reason){
+      modalInstance.result.then(function (result) {
+          //Flash.clear();
+          if(result){
+              createNewMatchup(result)
+          }
+      }, function(reason){
 
-            })
+      });
   }
 
 function showLoginModal(size) {

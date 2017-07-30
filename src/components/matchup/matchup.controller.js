@@ -12,11 +12,11 @@ import template from './_matchup.html'
         let vm = this;
         const HOME = 'home';
         const AWAY = 'away';
+        const TEAM_PROPS = {NAME: 'name', COLOR: 'color'};
 
         vm.$onInit = onInit;
         vm.incrementScore = incrementScore;
         vm.updateTeam = updateTeam;
-        vm.toggleTimerRunning = toggleTimerRunning
         vm.setTimerRunning = setTimerRunning;
         vm.$onChanges = onChanges;
 
@@ -25,7 +25,6 @@ import template from './_matchup.html'
             vm.AWAY = AWAY;
             
             vm.teamsEditable = vm.unstarted;  
-            vm.matchups = matchupsFactory;  
         }
 
         function onChanges(changes) {
@@ -37,13 +36,6 @@ import template from './_matchup.html'
                     }
                 })
             }
-        }
-
-        function toggleTimerRunning() {
-            vm.matchup.timer_running = !vm.matchup.timer_running;
-            let syncedElt = matchupsFactory.$getRecord(vm.matchup.$id)
-            syncedElt.timer_running = vm.matchup.timer_running;
-            matchupsFactory.$save(syncedElt);
         }
 
         function setTimerRunning(running) {
@@ -66,10 +58,12 @@ import template from './_matchup.html'
         }
 
         function updateTeam(team, prop, value) {
-            if(team === HOME) {
-                vm.matchup.homeTeam[prop] = value;
-            } else if(team === AWAY) {
-                vm.matchup.awayTeam[prop] = value;
+            if(Object.keys(TEAM_PROPS).indexOf(prop.toUpperCase()) !== -1){
+                if(team === HOME) {
+                    vm.matchup.homeTeam[prop] = value;
+                } else if(team === AWAY) {
+                    vm.matchup.awayTeam[prop] = value;
+                }
             }
         }
 

@@ -26,7 +26,7 @@ module.exports = function(config) {
       components_entry,
       './node_modules/angular-mocks/angular-mocks.js',
       'src/index.html',
-      'src/**/*.spec.js'
+      'src/**/*.spec.js',
     ],
     webpack:webpackConfig,
 
