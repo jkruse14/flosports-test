@@ -13,7 +13,8 @@ export default function CreateMatchupModalController($uibModalInstance, matchups
             awayTeam: vm.matchup.awayTeam,
             away_score: 0,
             match_time: vm.match_time,
-            timer_running: false
+            timer_running: false,
+            final: false
         });
     }
 
