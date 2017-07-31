@@ -21,6 +21,5 @@ The **Scoreboard** Tab displays all matchups in a non-editable board.
 
 ### ToDo:
 
-- [] Fix refresh loop when coming back to the app
 - [] create registration component
 - [] make sure to destroy $watches
