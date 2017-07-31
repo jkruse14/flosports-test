@@ -1,5 +1,6 @@
 <div id='scoreboard' ng-show='vm.matchupsLoaded === true'>
     <matchup ng-repeat='matchup in vm.matchups' matchup='matchup' 
                                                 unstarted='false' 
-                                                editable='false'></matchup>
+                                                editable='false'
+                                                filter='vm.filter'></matchup>
 </div>

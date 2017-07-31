@@ -16,30 +16,40 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
   vm.$onChanges = onChanges;
   vm.createNewMatchup = createNewMatchup;
   vm.showCreateMatchupModal = showCreateMatchupModal;
+  vm.updateFilters = updateFilters;
+  vm.setTab = setTab;
 
   function onInit() {
-    if(!floAuthService.isLoggedIn()) {
-      showLoginModal('md');
+    vm.loggedIn = floAuthService.isLoggedIn()
+    if(!vm.loggedIn) {
+      showLoginModal();
     } else {
-      vm.showLogin = false;
-      vm.matchups = matchupsFactory;
-      vm.matchups.$loaded().then(function(matchups){
-        vm.matchupsLoaded = true;
-      })
+      loadMatchups();
 
-      vm.tabs = [{heading:'Edit Scores'}, {heading:'Scoreboard'}]
+      vm.tabs = [{heading:'Edit Scores'}, {heading:'Scoreboard'}];
+      vm.filterOptions = [{display: 'All', value:'ALL'}, {display: 'Active', value:'ACTIVE'}, {display: 'Final', value: 'FINAL'}]
+      vm.selectedFilter = vm.filterOptions[0];
+      vm.tab = 0;
     }
   }
 
   function onChanges(changes) {
     console.log(changes)
-    if(floAuthService.isLoggedIn() && changes.showLogin && changes.showLogin.previousValue === true) {
+    if(changes.loggedIn && changes.loggedIn.currentValue === true) {
       console.log('loading matchups')
-      vm.showLogin = false;
       vm.matchups = matchupsFactory;
       vm.matchups.$loaded().then(function(matchups){
         vm.matchupsLoaded = true;
       })
+    }
+  }
+
+  function loadMatchups() {
+    if(vm.loggedIn){
+      vm.matchups = matchupsFactory;
+        vm.matchups.$loaded().then(function(matchups){
+          vm.matchupsLoaded = true;
+        })
     }
   }
 
@@ -49,15 +59,34 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
     }
   }
 
+  function updateFilters(filter) {
+    console.log(filter)
+    vm.selectedFilter = filter;
+  }
+
+  function setTab(tab) {
+    switch(tab) {
+      case 0:
+        vm.tab = 0;
+        break;
+      case 1: 
+        vm.tab = 1;
+        break;
+      default:
+        vm.tab = 0;
+        break;
+    }
+  }
+
   function showCreateMatchupModal(size) {
     var modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 templateUrl: 'src/components/matchup/_createMatchup.html',
-                controller : CreateMatchupModalController,
-                controllerAs: 'vm',
-                size: 'md',
+                controller : 'CreateMatchupModalController as vm',
+                //controllerAs: 'vm',
+                size: 'lg',
                 scope: $scope
             });
 
@@ -71,15 +100,30 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
       });
   }
 
-function showLoginModal(size) {
+  /*
+   * for whatever reason, when I use templateUrl here, it does not put 
+   * the firebaseui auth container in the modal, so sticking with this
+   * messy workaround
+   * Also, firebaseui currently does not have a direct sign-up, you have 
+   * to go through sign in -> add account. future feature is pending:
+   * https://github.com/firebase/firebaseui-web/issues/35
+   */
+function showLoginModal() {
   var modalInstance = $uibModal.open({
     animation: true,
     ariaLabelledBy: 'modal-title',
     ariaDescribedBy: 'modal-body',
-    template: '<div id="firebaseui-auth-container"></div>',
+    template : `<div class='modal-content'>
+                  <div class='modal-header'> 
+                    <h4>Login to FloSports Scoreboard</h4> 
+                  </div>
+                  <div class='modal-body'>
+                    <div id="firebaseui-auth-container"></div> 
+                  </div> 
+                </div>`,
     controller: 'floAuthController',
     controllerAs: 'vm',
-    size: 'md',
+    size: 'sm',
     scope: $scope,
     opened: floAuthService.showLogin(floAuthService.firebaseUIConfig)
   });
@@ -93,11 +137,22 @@ function showLoginModal(size) {
         //fixed the issue. It's ugly, but it works.
         //I tried to use the firebaseAuth onAuthStateChange event, but still had the issue
         $window.location.reload();
+        console.log(vm);
+        vm.loggedIn = true;
+        //loadMatchups();
       } else {
         showLoginModal();
       }
     }, function (reason) {})
   }
+
+  floAuthService.firebaseAuthObject.$onAuthStateChanged(function(firebaseUser) {
+      if (firebaseUser) {
+          vm.loggedIn = true;
+          //loadMatchups();
+          //$scope.$apply();
+      }
+  });
 
 }
 })();

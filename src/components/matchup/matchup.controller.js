@@ -28,7 +28,7 @@ import template from './_matchup.html'
         }
 
         function onChanges(changes) {
-            if(angular.isDefined(changes.matchup.currentVaule) && vm.watchSet !== true) {
+            if(changes.matchup && changes.matchup.currentVaule && vm.watchSet !== true) {
                 vm.watchSet = true;
                 matchupsFactory.$watch(function(event){
                     if(event.event === 'child_changed' && event.id === vm.matchup.$id) {
@@ -70,6 +70,7 @@ import template from './_matchup.html'
         $rootScope.$on('FLOWTIMER_END', function(matchId){
             let match = matchupsFactory.$getRecord(matchId)
             match.final = true;
+            match_time = 0;
             matchupsFactory.$save(match);
         })
     }
