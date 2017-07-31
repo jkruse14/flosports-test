@@ -13,7 +13,8 @@ import template from './_matchup.html'
                 unstarted: '<',
                 final:     '<',
                 editable:  '<',
-                inModal: '<'
+                inModal: '<',
+                filter: '<'
             }
         });
 

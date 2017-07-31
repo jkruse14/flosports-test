@@ -1,16 +1,22 @@
-  <div id="firebaseui-auth-container" ng-hide="vm.showLogin === true"></div>
-  <uib-tabset active="activeJustified" justified="true" ng-show="vm.showLogin === false">
-    <uib-tab index="0" heading={{vm.tabs[0].heading}}>
-      
-      <button class="btn btn-primary" type='button' ng-click="vm.showCreateMatchupModal()" >Create New Matchup</button>
-      
-      <div id='update-active-matchups' ng-show='vm.matchupsLoaded === true'>
-        <matchup ng-repeat='matchup in vm.matchups' matchup='matchup'
-                                                    unstarted='false'
-                                                    editable='true'></matchup>
-      </div>
-    </uib-tab>
-    <uib-tab index="1" heading={{vm.tabs[1].heading}}>
-      <scoreboard></scoreboard>
-    </uib-tab>
-  </uib-tabset>
+  <uib-tabset active="activeJustified" justified="true" >
+    <uib-tab index="0" heading={{vm.tabs[0].heading}} ng-click="vm.setTab(0)"></uib-tab>
+    <uib-tab index="1" heading={{vm.tabs[1].heading}} ng-click="vm.setTab(1)"></uib-tab>    
+  <div class="btn-group" uib-dropdown keyboard-nav>
+    <button id="matchups-filter" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            Showing {{vm.selectedFilter.display}} Matchups <span class="caret"></span>
+        </button>
+    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+      <li ng-repeat='filter in vm.filterOptions' role="menuitem" ng-model='vm.selectedFilter' ng-click='vm.updateFilters(filter)'><a href="#">{{filter.display}}</a></li>
+    </ul>
+  </div>
+  <button ng-show="vm.tab === 0" class="btn btn-primary" type='button' ng-click="vm.showCreateMatchupModal()">Create New Matchup</button>
+  <div ng-show='vm.tab === 0'>
+    
+    <div id='update-active-matchups' ng-show='vm.matchupsLoaded === true'>
+      <matchup ng-repeat='matchup in vm.matchups' matchup='matchup' unstarted='false' editable='true' filter='vm.selectedFilter.value'></matchup>
+    </div>
+  </div>
+  <div ng-show="vm.tab === 1">
+    <scoreboard filter='vm.selectedFilter.value'></scoreboard>
+  </div>
+</uib-tabset>

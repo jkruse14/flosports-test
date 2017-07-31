@@ -9,6 +9,8 @@ import template from './_scoreboard.html'
             template: template,
             controller: 'ScoreBoardController',
             controllerAs: 'vm',
-            bindings: {}
+            bindings: {
+                filter: '<'
+            }
         })
 })();
