@@ -23,8 +23,4 @@ The **Scoreboard** Tab displays all matchups in a non-editable board.
 
 - [] Fix refresh loop when coming back to the app
 - [] create registration component
-- [] add title to login form 
-- [] complete 'Final' label logic
-- [] filter scoreboard on final/active matches
-- [] set team color to bg color on scoreboard
 - [] make sure to destroy $watches
