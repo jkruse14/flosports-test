@@ -1,3 +1,27 @@
+/*angular ui overrides*/
+.modal {
+    display: block;
+    height: 100vh;
+    min-height: 300px;
+}
+.modal-content {
+    border: none;
+    background-color: white;
+}
+.modal-body:before,
+.modal-body:after {
+    display: table;
+    content: " ";
+}
+.modal-header{
+    font-size: 2rem;
+}
+.modal-header:before,
+.modal-header:after {
+    display: table;
+    content: " ";
+}
+
 main {
   padding: 10px;
 }
@@ -31,6 +55,27 @@ team,.matchup-team-container,.inc-score{
   padding-left: 15px;
 }
 
+#timer-container {
+    position: relative;
+    margin: 0px auto;
+    width: 50%;
+    font-size: 2.1rem;
+}
+
+#timer-btn {
+    position: absolute;
+    right: 5%;
+    top: 13%;
+}
+
+.score-text {
+  color:'white'; 
+  font-weight:800;
+}
+
+.team-color-addon {
+  width: 55%;
+}
 
 /*** color picker ***/
 

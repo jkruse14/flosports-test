@@ -12,7 +12,8 @@
                        ng-model="vm.color"
                        ng-change="vm.update('color', vm.color)" 
                        ng-disabled="!vm.name || vm.editable === false">
-                <span colorpicker ng-model='vm.color' class='input-group-addon' ng-style="{'background-color': vm.color}" ng-disabled="!vm.name || vm.editable === false"></span>
+                <span ng-show="vm.editable === true" colorpicker ng-model='vm.color' class='input-group-addon team-color-addon' ng-style="{'background-color': vm.color}" ng-disabled="!vm.name || vm.editable === false"></span>
+                <span ng-show="vm.editable === false" ng-model='vm.color' class='input-group-addon team-color-addon' ng-style="{'background-color': vm.color}" ng-disabled="!vm.name || vm.editable === false"></span>
             </div>
             <small class="help-block" ng-show='vm.editable'>Select a team color by clicking on the box next to the name</small>
         </div>
