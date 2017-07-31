@@ -20,6 +20,7 @@ import template from './_matchup.html'
         vm.setTimerRunning = setTimerRunning;
         vm.$onChanges = onChanges;
         vm.finalizeMatch = finalizeMatch;
+        vm.setMatchTime = setMatchTime;
 
         function onInit() {
             vm.HOME = HOME;
@@ -75,13 +76,14 @@ import template from './_matchup.html'
             syncedElt.final = true;
             matchupsFactory.$save(syncedElt);
         }
-
-        // $rootScope.$on('FLOTIMER_END', function(matchId){
-        //     let match = matchupsFactory.$getRecord(matchId)
-        //     match.final = true;
-        //     match_time = 0;
-        //     matchupsFactory.$save(match);
-        // })
+        
+        function setMatchTime(time) {
+            //comes through in seconds
+            vm.matchup.match_time = time;
+            let syncedElt = matchupsFactory.$getRecord(vm.matchup.$id)
+            syncedElt.match_time = time;
+            matchupsFactory.$save(syncedElt);
+        }
     }
 
 })();

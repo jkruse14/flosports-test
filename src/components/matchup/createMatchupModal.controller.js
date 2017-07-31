@@ -24,7 +24,7 @@
                 home_score: 0,
                 awayTeam: vm.matchup.awayTeam,
                 away_score: 0,
-                match_time: vm.match_time,
+                match_time: vm.match_time * 60,
                 timer_running: false,
                 final: false
             });

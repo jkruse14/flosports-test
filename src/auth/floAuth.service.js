@@ -53,7 +53,9 @@
         function showLogin(config) {
             // The start method will wait until the DOM is loaded.
             console.log('showlogin')
-            ui.start('#firebaseui-auth-container', config);
+            if(!isLoggedIn()){
+                ui.start('#firebaseui-auth-container', config);
+            }
         }
 
         function register(user) {

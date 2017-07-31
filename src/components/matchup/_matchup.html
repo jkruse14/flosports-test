@@ -49,6 +49,7 @@
         <timer countdown-start='vm.matchup.match_time' 
                timer-running='vm.matchup.timer_running'
                timer-obj-id='vm.matchup.$id'
+               timer-paused='vm.setMatchTime'
                timer-complete='vm.finalizeMatch'
                 ng-hide="vm.matchup.final"></timer>
         <span id='final-span' ng-show="vm.matchup.final">Final</span>

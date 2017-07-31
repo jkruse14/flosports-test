@@ -13,7 +13,8 @@ import template from './_timer.html';
                 countdownStart: '<', //in minutes
                 timerRunning: '<',
                 timerObjId: '@',
-                timerComplete: '&'
+                timerComplete: '&',
+                timerPaused:'&'
             }
         })
 
@@ -29,7 +30,7 @@ function TimerController($interval, $scope, $rootScope) {
 
     function onInit() {
         //default to 30 minutes
-        vm.countdownStart = vm.countdownStart === undefined ? 1800 : vm.countdownStart * 60 //convert to seconds
+        vm.countdownStart = vm.countdownStart === undefined ? 1800 : vm.countdownStart
         vm.time_remaining = vm.countdownStart;
         vm.minutes = Math.floor(vm.time_remaining / 60)
         vm.seconds = vm.time_remaining - (vm.minutes * 60);
@@ -72,6 +73,7 @@ function TimerController($interval, $scope, $rootScope) {
         } else if(running === false) {
             if(vm.time_remaining !== 0) {
                 vm.countdown_start = vm.time_remaining
+                vm.timerPaused()(vm.time_remaining);
             }
             stopTimer();
         }
