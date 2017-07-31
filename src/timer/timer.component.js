@@ -12,13 +12,14 @@ import template from './_timer.html';
             bindings: {
                 countdownStart: '<', //in minutes
                 timerRunning: '<',
-                timerObjId: '@'
+                timerObjId: '@',
+                timerComplete: '&'
             }
         })
 
-TimerController.$inject = ['$interval', '$scope'];
+TimerController.$inject = ['$interval', '$scope', '$rootScope'];
 
-function TimerController($interval, $scope) {
+function TimerController($interval, $scope, $rootScope) {
     let vm = this;
     let endInterval;
 
@@ -44,11 +45,17 @@ function TimerController($interval, $scope) {
         vm.time_remaining -= 1;
         vm.minutes = Math.floor(vm.time_remaining / 60)
         vm.seconds = vm.time_remaining - (vm.minutes * 60);
-        vm.minutes = vm.minutes < 10 ? '0' + vm.minutes : vm.minutes
-        vm.seconds = vm.seconds < 10 ? '0' + vm.seconds : vm.seconds
+        vm.minutes = vm.minutes < 10
+            ? '0' + vm.minutes
+            : vm.minutes
+        vm.seconds = vm.seconds < 10
+            ? '0' + vm.seconds
+            : vm.seconds
 
         if (vm.time_remaining === 0) {
             stopTimer();
+            vm.timerComplete()();
+            //$rootScope.$broadcast('FLOTIMER_END',vm.timerObjId)
         }
     }
 

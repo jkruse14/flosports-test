@@ -1,7 +1,7 @@
 <div class='matchup-container row' ng-show='vm.inModal == true ||
                                             vm.filter === "ALL" || 
                                             vm.matchup.final === true && vm.filter === "FINAL" || 
-                                            !vm.final && vm.filter === "ACTIVE"'>
+                                            !vm.matchup.final && vm.filter === "ACTIVE"'>
     <div class='matchup-team-container'>
         <team name='vm.matchup.homeTeam.name' 
               color='vm.matchup.homeTeam.color'
@@ -16,7 +16,7 @@
                     <input type="number" class="form-control score-text" id="team_score" placeholder="Score" 
                            ng-model='vm.matchup.home_score' ng-readonly="vm.editable === false">
                     <span class='input-group-btn' ng-show='vm.editable === true'>
-                        <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.HOME, 1)" ng-disabled="vm.matchup.timer_running === false">Increment</button>
+                        <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.HOME, 1)" ng-disabled="vm.matchup.timer_running === false || vm.matchup.final === true">Increment</button>
                     </span>
                 </div>
             </div>
@@ -38,17 +38,18 @@
                             ng-readonly="vm.editable === false">
                     <span class='input-group-btn' ng-show='vm.editable === true'>
                         <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.AWAY, 1)" 
-                                                                        ng-disabled="vm.matchup.timer_running === false">Increment</button>
+                                                                        ng-disabled="vm.matchup.timer_running === false || vm.matchup.final === true">Increment</button>
                     </span>
                 </div>
                 <p class="help-block" ng-show="vm.matchup.timer_running === false">Match is currently paused</p>
             </div>
         </form>
     </div>
-   <div id="timer-container" ng-hide="vm.inModal === true || vm.matchup.final === true">
+   <div id="timer-container" ng-hide="vm.inModal === true">
         <timer countdown-start='vm.matchup.match_time' 
                timer-running='vm.matchup.timer_running'
                timer-obj-id='vm.matchup.$id'
+               timer-complete='vm.finalizeMatch'
                 ng-hide="vm.matchup.final"></timer>
         <span id='final-span' ng-show="vm.matchup.final">Final</span>
     </div>

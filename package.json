@@ -52,6 +52,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server",
+    "deploy-prod": "webpack && firebase deploy",
     "test": "karma start --single-run",
     "test-dev": "istanbul cover -x '*.spec.js' karma start"
   },
