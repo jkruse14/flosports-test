@@ -36,7 +36,6 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
   function onChanges(changes) {
     console.log(changes)
     if(changes.loggedIn && changes.loggedIn.currentValue === true) {
-      console.log('loading matchups')
       vm.matchups = matchupsFactory;
       vm.matchups.$loaded().then(function(matchups){
         vm.matchupsLoaded = true;
@@ -47,9 +46,10 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
   function loadMatchups() {
     if(vm.loggedIn){
       vm.matchups = matchupsFactory;
-        vm.matchups.$loaded().then(function(matchups){
-          vm.matchupsLoaded = true;
-        })
+      vm.matchupsLoaded = true;
+      vm.matchups.$loaded().then(function(matchups){
+        vm.matchupsLoaded = true;
+      })
     }
   }
 
@@ -137,22 +137,14 @@ function showLoginModal() {
         //fixed the issue. It's ugly, but it works.
         //I tried to use the firebaseAuth onAuthStateChange event, but still had the issue
         $window.location.reload();
-        console.log(vm);
-        vm.loggedIn = true;
-        //loadMatchups();
+        // console.log(vm);
+        // vm.loggedIn = true;
+        // loadMatchups();
       } else {
         showLoginModal();
       }
     }, function (reason) {})
   }
-
-  floAuthService.firebaseAuthObject.$onAuthStateChanged(function(firebaseUser) {
-      if (firebaseUser) {
-          vm.loggedIn = true;
-          //loadMatchups();
-          //$scope.$apply();
-      }
-  });
 
 }
 })();
