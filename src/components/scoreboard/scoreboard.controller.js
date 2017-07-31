@@ -5,15 +5,38 @@
         .module('flosports-test')
         .controller('ScoreBoardController', ScoreBoardController)
 
-    ScoreBoardController.$inject = ['$firebaseArray', 'scoreboardFactory'];
+    ScoreBoardController.$inject = ['$firebaseArray','$scope', 'floAuthService', 'scoreboardFactory'];
 
-    function ScoreBoardController($firebaseArray, scoreboardFactory) {
+    function ScoreBoardController($firebaseArray, $scope, floAuthService, scoreboardFactory) {
         let vm = this;
 
-        vm.matchups = scoreboardFactory;
-    
-        vm.matchups.$loaded().then(function(matchups){
-            vm.matchupsLoaded = true;
+        vm.$onInit = onInit;
+        vm.$onChanges = onChanges; 
+
+        function onInit() {
+            if(floAuthService.isLoggedIn()){
+                loadMatchups();
+            }
+        }
+
+        function onChanges(changes){
+
+        }
+
+        function loadMatchups() {
+            vm.matchups = scoreboardFactory;
+        
+            vm.matchups.$loaded().then(function(matchups){
+                vm.matchupsLoaded = true;
+            });
+        }
+
+        floAuthService.firebaseAuthObject.$onAuthStateChanged(function(firebaseUser) {
+            if (firebaseUser) {
+                vm.loggedIn = true;
+                loadMatchups();
+                $scope.$apply();
+            }
         });
     }
 })(); 

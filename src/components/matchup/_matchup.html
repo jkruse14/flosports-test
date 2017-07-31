@@ -1,4 +1,5 @@
-<div class='matchup-container row' ng-show='vm.filter === "ALL" || 
+<div class='matchup-container row' ng-show='vm.inModal == true ||
+                                            vm.filter === "ALL" || 
                                             vm.matchup.final === true && vm.filter === "FINAL" || 
                                             !vm.final && vm.filter === "ACTIVE"'>
     <div class='matchup-team-container'>
@@ -44,15 +45,6 @@
             </div>
         </form>
     </div>
-    <form id="match-time-form" ng-if='vm.inModal === true'>
-        <div class="form-group">
-            <label for="team_score">Match Time</label>
-            <div class='input-group'>
-                <input type="number" class="form-control" id="match-time" placeholder="Match Time" ng-model='vm.match_time'>
-            </div>
-            <p class="help-block">Total time for the match (minutes)</p>
-        </div>
-    </form>
    <div id="timer-container" ng-hide="vm.inModal === true || vm.matchup.final === true">
         <timer countdown-start='vm.matchup.match_time' 
                timer-running='vm.matchup.timer_running'

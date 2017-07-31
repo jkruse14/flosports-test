@@ -14,7 +14,8 @@ import template from './_matchup.html'
                 final:     '<',
                 editable:  '<',
                 inModal: '<',
-                filter: '<'
+                filter: '<',
+                match_time: '<'
             }
         });
 

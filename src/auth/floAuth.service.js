@@ -69,7 +69,7 @@
         }
 
         function isLoggedIn() {
-            return firebaseAuthObject.$getAuth();
+            return firebaseAuthObject.$getAuth() !== null ? true : false;
         }
 
         function sendWelcomeEmail(emailAddress) {

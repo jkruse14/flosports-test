@@ -1,4 +1,4 @@
-  <uib-tabset active="activeJustified" justified="true" >
+  <uib-tabset active="activeJustified" justified="true" ng-show="vm.loggedIn === true">
     <uib-tab index="0" heading={{vm.tabs[0].heading}} ng-click="vm.setTab(0)"></uib-tab>
     <uib-tab index="1" heading={{vm.tabs[1].heading}} ng-click="vm.setTab(1)"></uib-tab>    
   <div class="btn-group" uib-dropdown keyboard-nav>
@@ -11,7 +11,6 @@
   </div>
   <button ng-show="vm.tab === 0" class="btn btn-primary" type='button' ng-click="vm.showCreateMatchupModal()">Create New Matchup</button>
   <div ng-show='vm.tab === 0'>
-    
     <div id='update-active-matchups' ng-show='vm.matchupsLoaded === true'>
       <matchup ng-repeat='matchup in vm.matchups' matchup='matchup' unstarted='false' editable='true' filter='vm.selectedFilter.value'></matchup>
     </div>
