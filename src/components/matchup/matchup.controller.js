@@ -19,6 +19,8 @@ import template from './_matchup.html'
         vm.updateTeam = updateTeam;
         vm.setTimerRunning = setTimerRunning;
         vm.$onChanges = onChanges;
+        vm.finalizeMatch = finalizeMatch;
+        vm.setMatchTime = setMatchTime;
 
         function onInit() {
             vm.HOME = HOME;
@@ -67,12 +69,21 @@ import template from './_matchup.html'
             }
         }
 
-        $rootScope.$on('FLOWTIMER_END', function(matchId){
-            let match = matchupsFactory.$getRecord(matchId)
-            match.final = true;
-            match_time = 0;
-            matchupsFactory.$save(match);
-        })
+        function finalizeMatch() {
+            vm.matchup.final = true;
+            vm.match_time = 0;
+            let syncedElt = matchupsFactory.$getRecord(vm.matchup.$id)
+            syncedElt.final = true;
+            matchupsFactory.$save(syncedElt);
+        }
+        
+        function setMatchTime(time) {
+            //comes through in seconds
+            vm.matchup.match_time = time;
+            let syncedElt = matchupsFactory.$getRecord(vm.matchup.$id)
+            syncedElt.match_time = time;
+            matchupsFactory.$save(syncedElt);
+        }
     }
 
 })();

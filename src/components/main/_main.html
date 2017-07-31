@@ -11,7 +11,7 @@
   </div>
   <button ng-show="vm.tab === 0" class="btn btn-primary" type='button' ng-click="vm.showCreateMatchupModal()">Create New Matchup</button>
   <div ng-show='vm.tab === 0'>
-    <div id='update-active-matchups' ng-show='vm.matchupsLoaded === true'>
+    <div id='update-active-matchups'>
       <matchup ng-repeat='matchup in vm.matchups' matchup='matchup' unstarted='false' editable='true' filter='vm.selectedFilter.value'></matchup>
     </div>
   </div>
