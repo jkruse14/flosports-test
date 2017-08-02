@@ -5,9 +5,9 @@
         .module('floTimer')
         .controller('TimerController', TimerController)
 
-    TimerController.$inject = ['$interval', '$rootScope'];
+TimerController.$inject = ['$interval', '$scope', '$rootScope'];
 
-function TimerController($interval, $rootScope) {
+function TimerController($interval, $scope, $rootScope) {
     let vm = this;
     let endInterval;
 
@@ -17,7 +17,7 @@ function TimerController($interval, $rootScope) {
 
     function onInit() {
         //default to 30 minutes
-        vm.countdown_start = vm.countdownStart === undefined
+        vm.countdownStart = vm.countdownStart === undefined
             ? 1800
             : vm.countdownStart
         vm.time_remaining = vm.countdownStart;
@@ -48,7 +48,8 @@ function TimerController($interval, $rootScope) {
 
         if (vm.time_remaining === 0) {
             stopTimer();
-            $rootScope.$broadcast('FLOTIMER_END',vm.timerObjId)
+            vm.timerComplete()();
+            //$rootScope.$broadcast('FLOTIMER_END',vm.timerObjId)
         }
     }
 
@@ -65,6 +66,7 @@ function TimerController($interval, $rootScope) {
         } else if (running === false) {
             if (vm.time_remaining !== 0) {
                 vm.countdown_start = vm.time_remaining
+                vm.timerPaused()(vm.time_remaining);
             }
             stopTimer();
         }
@@ -74,5 +76,7 @@ function TimerController($interval, $rootScope) {
         .$watch('vm.timerRunning', function () {
             setRunning(vm.timerRunning)
         })
+
+
 }
-});
+})();
