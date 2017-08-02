@@ -131,15 +131,7 @@ function showLoginModal() {
   modalInstance.result.then(function (result) {
       //Flash.clear();
       if (result) {
-        //there seems to be a race condition with logging in and close
-        //if I called onInit here, I still could not make a call to matchupsFactory
-        //it would say the client does not have permission. reloading the location 
-        //fixed the issue. It's ugly, but it works.
-        //I tried to use the firebaseAuth onAuthStateChange event, but still had the issue
-        $window.location.reload();
-        // console.log(vm);
-        // vm.loggedIn = true;
-        // loadMatchups();
+        onInit();
       } else {
         showLoginModal();
       }
