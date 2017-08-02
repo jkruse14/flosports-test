@@ -14,7 +14,11 @@
                 <label for="team_score">Score</label>
                 <div class='input-group'>
                     <input type="number" class="form-control score-text" id="team_score" placeholder="Score" 
-                           ng-model='vm.matchup.home_score' ng-readonly="vm.editable === false">
+                           ng-model='vm.matchup.home_score' 
+                           ng-change='vm.setScore("vm.HOME")'
+                           ng-readonly="vm.editable === false || 
+                                         vm.matchup.timer_running === false || 
+                                         vm.matchup.final === true">
                     <span class='input-group-btn' ng-show='vm.editable === true'>
                         <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.HOME, 1)" ng-disabled="vm.matchup.timer_running === false || vm.matchup.final === true">Increment</button>
                     </span>
@@ -35,7 +39,10 @@
                 <div class='input-group'>
                     <input type="number" class="form-control score-text" id="team_score" placeholder="Score" 
                             ng-model='vm.matchup.away_score'
-                            ng-readonly="vm.editable === false">
+                            ng-change='vm.setScore("vm.AWAY")'
+                            ng-readonly="vm.editable === false ||
+                                         vm.matchup.timer_running === false || 
+                                         vm.matchup.final === true">
                     <span class='input-group-btn' ng-show='vm.editable === true'>
                         <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.AWAY, 1)" 
                                                                         ng-disabled="vm.matchup.timer_running === false || vm.matchup.final === true">Increment</button>

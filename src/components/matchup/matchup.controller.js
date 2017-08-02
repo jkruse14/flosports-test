@@ -16,6 +16,7 @@ import template from './_matchup.html'
 
         vm.$onInit = onInit;
         vm.incrementScore = incrementScore;
+        vm.setScore = setScore;
         vm.updateTeam = updateTeam;
         vm.setTimerRunning = setTimerRunning;
         vm.$onChanges = onChanges;
@@ -54,6 +55,18 @@ import template from './_matchup.html'
                     syncedElt.home_score += inc;
                 } else if(team === AWAY) {
                     syncedElt.away_score += inc;
+                }
+                matchupsFactory.$save(syncedElt);
+            }
+        }
+
+        function setScore(team) {
+            if(vm.matchup.timer_running) {
+                let syncedElt = matchupsFactory.$getRecord(vm.matchup.$id)
+                if(team === HOME) {
+                    syncedElt.home_score = vm.matchup.home_score;
+                } else if(team === AWAY) {
+                    syncedElt.away_score = vm.matchup.away_score;
                 }
                 matchupsFactory.$save(syncedElt);
             }
