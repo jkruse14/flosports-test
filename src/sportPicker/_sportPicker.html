@@ -1,0 +1,21 @@
+<div class="btn-group" uib-dropdown keyboard-nav>
+    <button id="sport-picker" type="button" class="btn btn-primary" uib-dropdown-toggle>
+            Sport: {{vm.selected_sport}}  <span class="caret"></span>
+        </button>
+    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+        <ul class="sport-picker dropdown-menu-list" role="menu">
+            <li class="dropdown-menu-sublist-title" role="menuitem">Team</li>
+            <li class="divider"></li>
+            <ul class="dropdown-menu-sublist" role="menu">
+                <li ng-repeat='sport in vm.sports.team' role="menuitem" ng-model='vm.selected_sport' ng-click='vm.sendSportData(sport)'><a href="#">{{sport.display}}</a></li>
+            </ul>
+        </ul>
+        <ul class="sport-picker dropdown-menu-list" role="menu" ng-repeat='(cat,events) in vm.sports.individual'>
+            <li class="dropdown-menu-sublist-title" role="menuitem">{{cat}}</li>
+            <li class="divider"></li>
+            <ul class="dropdown-menu-sublist" role="menu">
+                <li ng-repeat='event in events' role="menuitem" ng-model='vm.selected_sport' ng-click='vm.sendSportData(event)'><a href="#">{{event.display}}</a></li>
+            </ul>
+        </ul>
+    </ul>
+</div>
