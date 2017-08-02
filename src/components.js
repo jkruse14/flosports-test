@@ -1,5 +1,6 @@
 import './auth'
 import './timer'
+import './sportPicker'
 import './components/matchup'
 import './components/main'
 import './components/scoreboard/scoreboard.component'

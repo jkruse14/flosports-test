@@ -7,6 +7,7 @@ angular
       'ui.bootstrap',
       'colorpicker.module',
       'floAuth',
-      'floTimer'
+      'floTimer',
+      'floSportPicker'
 ])
 .config(AppRoutes)

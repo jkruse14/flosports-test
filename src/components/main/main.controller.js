@@ -1,4 +1,5 @@
-import CreateMatchupModalController from '../matchup/createMatchupModal.controller'
+import template from '../matchup/_createMatchup.html';
+
 
 ( function() {
 'use strict';
@@ -83,7 +84,7 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'src/components/matchup/_createMatchup.html',
+                template: template,
                 controller : 'CreateMatchupModalController as vm',
                 //controllerAs: 'vm',
                 size: 'lg',

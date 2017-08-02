@@ -77,6 +77,25 @@ team,.matchup-team-container,.inc-score{
   width: 55%;
 }
 
+sportpicker > div > .dropdown-menu{
+  overflow-y: auto;
+  max-height: 400px;
+  margin-top: 0px;
+}
+
+.sport-picker {
+  padding-left: 5px;
+}
+.dropdown-menu-sublist-title {
+  list-style: none;
+  font-variant: small-caps;
+  font-size: 1.9rem;
+}
+
+.dropdown-menu-sublist {
+  list-style: none;
+}
+
 /*** color picker ***/
 
 /*use webpack here instead*/
