@@ -22,12 +22,14 @@ import template from './_matchup.html'
         vm.$onChanges = onChanges;
         vm.finalizeMatch = finalizeMatch;
         vm.setMatchTime = setMatchTime;
+        vm.selectSport = selectSport;
 
         function onInit() {
             vm.HOME = HOME;
             vm.AWAY = AWAY;
             
             vm.teamsEditable = vm.unstarted;  
+            vm.sport = '';
         }
 
         function onChanges(changes) {
@@ -96,6 +98,10 @@ import template from './_matchup.html'
             let syncedElt = matchupsFactory.$getRecord(vm.matchup.$id)
             syncedElt.match_time = time;
             matchupsFactory.$save(syncedElt);
+        }
+
+        function selectSport(sport) {
+            vm.sport = sport.display;
         }
     }
 

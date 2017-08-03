@@ -7,7 +7,9 @@
                    ng-model="vm.name" ng-model-options='{debounce: 200}'
                    ng-change="vm.update('name', vm.name)"
                    ng-readonly="vm.editable === false"
-                   value="vm.name"/>
+                   value="vm.name"
+                   uib-typeahead="team.name for team in vm.teams | limitTo:8" class="form-control"
+                   typeahead-on-select="vm.selectTeam($item, $model, $label, $event)">
                 <input type="hidden"  class="form-control" id="team_color" 
                        ng-model="vm.color"
                        ng-change="vm.update('color', vm.color)" 

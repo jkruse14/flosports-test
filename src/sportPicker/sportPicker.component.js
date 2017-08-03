@@ -5,12 +5,12 @@ import template from './_sportPicker.html'
 
     angular
         .module('floSportPicker')
-        .component('sportpicker', {
+        .component('sportPicker', {
             template: template,
             controller: 'sportPickerController',
             controllerAs: 'vm',
             bindings: {
-                getSport: '&'
+                selectSport: '&',
             }
         })
 })();

@@ -8,9 +8,9 @@ angular
   .module('flosports-test')
   .controller('MainController', MainController)
 
-MainController.$inject = ['$firebaseArray','$firebaseAuth', '$window', '$scope', '$uibModal', 'matchupsFactory', 'floAuthService'];
+MainController.$inject = ['$firebaseArray','$firebaseAuth', '$window', '$scope', '$uibModal', 'matchupsFactory', 'teamsFactory', 'floAuthService'];
 
-function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal, matchupsFactory, floAuthService) {
+function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal, matchupsFactory, teamsFactory, floAuthService) {
   let vm = this;
 
   vm.$onInit = onInit;
@@ -26,6 +26,7 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
       showLoginModal();
     } else {
       loadMatchups();
+      loadTeams();
 
       vm.tabs = [{heading:'Edit Scores'}, {heading:'Scoreboard'}];
       vm.filterOptions = [{display: 'All', value:'ALL'}, {display: 'Active', value:'ACTIVE'}, {display: 'Final', value: 'FINAL'}]
@@ -35,12 +36,9 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
   }
 
   function onChanges(changes) {
-    console.log(changes)
     if(changes.loggedIn && changes.loggedIn.currentValue === true) {
-      vm.matchups = matchupsFactory;
-      vm.matchups.$loaded().then(function(matchups){
-        vm.matchupsLoaded = true;
-      })
+      loadMatchups();
+      loadTeams();
     }
   }
 
@@ -54,14 +52,32 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
     }
   }
 
+  function loadTeams() {
+    if(vm.loggedIn) {
+      vm.teams = teamsFactory.getAllTeams();
+    }
+  }
+
   function createNewMatchup(match) {
     if(match.homeTeam.name && match.awayTeam.name) {
+
+      teamsFactory.getTeam(match.homeTeam).then(function(resp){
+        if(resp.val() === null){
+          vm.teams.$add(match.homeTeam);
+        }
+      });
+
+      teamsFactory.getTeam(match.awayTeam).then(function(resp){
+        if(resp.val() === null){
+          vm.teams.$add(match.awayTeam);
+        }
+      });
+
       vm.matchups.$add(match);
     }
   }
 
   function updateFilters(filter) {
-    console.log(filter)
     vm.selectedFilter = filter;
   }
 

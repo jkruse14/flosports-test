@@ -13,6 +13,7 @@ import template from './_team.html';
                 name: '<',
                 score: '<',
                 color: '<',
+                sport: '<',
                 updateTeam: '&',
                 homeOrAway: '<',
                 editable: '<'
