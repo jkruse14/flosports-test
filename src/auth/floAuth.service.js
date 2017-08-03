@@ -5,9 +5,9 @@
         .module('floAuth')
         .factory('floAuthService', floAuthService);
 
-    floAuthService.$inject = ['$firebaseAuth', '$location']
+    floAuthService.$inject = ['$firebaseAuth', '$location', '$uibModal']
 
-    function floAuthService($firebaseAuth, $location) {
+    function floAuthService($firebaseAuth, $location, $uibModal) {
         //have firebaseUi and firebaseAuth point to the same object
         let authObject = firebase.auth();
         let firebaseAuthObject = $firebaseAuth(authObject);
@@ -39,7 +39,8 @@
             logout: logout,
             isLoggedIn: isLoggedIn,
             sendWelcomeEmail: sendWelcomeEmail,
-            showLogin: showLogin
+            showLogin: showLogin,
+            showLoginModal: showLoginModal
         };
 
         return service;
@@ -50,9 +51,48 @@
             return false;
         }
 
+/*
+   * for whatever reason, when I use templateUrl here, it does not put
+   * the firebaseui auth container in the modal, so sticking with this
+   * messy workaround
+   * Also, firebaseui currently does not have a direct sign-up, you have
+   * to go through sign in -> add account. future feature is pending:
+   * https://github.com/firebase/firebaseui-web/issues/35
+   */
+function showLoginModal(callback) {
+    var modalInstance = $uibModal.open({
+        animation: true,
+        backdrop: 'static',
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        template: `<div class='modal-content'>
+                  <div class='modal-header'> 
+                    <h4>Login to FloSports Scoreboard</h4> 
+                  </div>
+                  <div class='modal-body'>
+                    <div id="firebaseui-auth-container"></div> 
+                  </div> 
+                </div>`,
+        controller: 'floAuthController',
+        controllerAs: 'vm',
+        size: 'sm',
+        opened: showLogin(uiConfig)
+    });
+
+    modalInstance
+        .result
+        .then(function (result) {
+            //Flash.clear();
+            if (result) {
+                callback();
+            } else {
+                showLoginModal();
+            }
+        }, function (reason) {})
+}
+
         function showLogin(config) {
             // The start method will wait until the DOM is loaded.
-            console.log('showlogin')
             if(!isLoggedIn()){
                 ui.start('#firebaseui-auth-container', config);
             }

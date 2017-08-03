@@ -23,7 +23,7 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
   function onInit() {
     vm.loggedIn = floAuthService.isLoggedIn()
     if(!vm.loggedIn) {
-      showLoginModal();
+      floAuthService.showLoginModal(onInit);
     } else {
       loadMatchups();
       loadTeams();
@@ -115,44 +115,6 @@ function MainController($firebaseArray,$firebaseAuth, $window, $scope, $uibModal
       }, function(reason){
 
       });
-  }
-
-  /*
-   * for whatever reason, when I use templateUrl here, it does not put 
-   * the firebaseui auth container in the modal, so sticking with this
-   * messy workaround
-   * Also, firebaseui currently does not have a direct sign-up, you have 
-   * to go through sign in -> add account. future feature is pending:
-   * https://github.com/firebase/firebaseui-web/issues/35
-   */
-function showLoginModal() {
-  var modalInstance = $uibModal.open({
-    animation: true,
-    ariaLabelledBy: 'modal-title',
-    ariaDescribedBy: 'modal-body',
-    template : `<div class='modal-content'>
-                  <div class='modal-header'> 
-                    <h4>Login to FloSports Scoreboard</h4> 
-                  </div>
-                  <div class='modal-body'>
-                    <div id="firebaseui-auth-container"></div> 
-                  </div> 
-                </div>`,
-    controller: 'floAuthController',
-    controllerAs: 'vm',
-    size: 'sm',
-    scope: $scope,
-    opened: floAuthService.showLogin(floAuthService.firebaseUIConfig)
-  });
-
-  modalInstance.result.then(function (result) {
-      //Flash.clear();
-      if (result) {
-        onInit();
-      } else {
-        showLoginModal();
-      }
-    }, function (reason) {})
   }
 
 }
