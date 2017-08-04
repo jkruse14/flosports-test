@@ -96,7 +96,7 @@ sport-picker > div > .dropdown-menu{
   list-style: none;
 }
 
-score-input > div > .input-group-btn > .scoring-btn {
+score-input > form > div > .input-group-btn > .scoring-btn {
   font-variant: small-caps;
 }
 
