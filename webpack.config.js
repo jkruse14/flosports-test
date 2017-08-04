@@ -7,9 +7,9 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './src/index.html',
   filename: 'index.html',
   inject: 'head',
-  chunks:['styles','vendor','app','components'],
+  chunks:['styles','vendor','app','providers','components'],
   chunksSortMode : function (chunk1, chunk2) {
-    var orders = ['styles','vendor','app','components'];
+    var orders = ['styles','vendor','app','providers','components'];
     var order1 = orders.indexOf(chunk1.names[0]);
     var order2 = orders.indexOf(chunk2.names[0]);
     if (order1 > order2) {
@@ -27,7 +27,8 @@ module.exports = {
     app: './src/index.js',
     vendor: './src/vendor.js',
     styles: './src/styles.css',
-    components: './src/components.js'
+    components: './src/components.js',
+    providers: './src/providers'
   },
   output: {
     path : path.join(__dirname, '/public'),

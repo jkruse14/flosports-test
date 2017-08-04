@@ -10,7 +10,7 @@
                 <li ng-repeat='sport in vm.sports.team' role="menuitem" ng-model='vm.selected_sport' ng-click='vm.sendSportData(sport)'><a href="#">{{sport.display}}</a></li>
             </ul>
         </ul>
-        <ul class="sport-picker dropdown-menu-list" role="menu" ng-repeat='(cat,events) in vm.sports.individual'>
+        <ul class="sport-picker dropdown-menu-list" role="menu" ng-repeat='(cat,events) in vm.sports.individual' ng-hide='true'>
             <li class="dropdown-menu-sublist-title" role="menuitem">{{cat}}</li>
             <li class="divider"></li>
             <ul class="dropdown-menu-sublist" role="menu">

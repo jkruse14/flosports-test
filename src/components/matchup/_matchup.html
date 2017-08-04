@@ -10,22 +10,15 @@
               editable="vm.teamsEditable"
               sport="vm.matchup.sport"
               class="col-xs-4"></team>
-        <form class="inc-score col-xs-4" ng-hide="vm.inModal === true">
-            <div class="form-group">
-                <label for="team_score">Score</label>
-                <div class='input-group'>
-                    <input type="number" class="form-control score-text" id="team_score" placeholder="Score" 
-                           ng-model='vm.matchup.home_score' 
-                           ng-change='vm.setScore("vm.HOME")'
-                           ng-readonly="vm.editable === false || 
-                                         vm.matchup.timer_running === false || 
-                                         vm.matchup.final === true">
-                    <span class='input-group-btn' ng-show='vm.editable === true'>
-                        <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.HOME, 1)" ng-disabled="vm.matchup.timer_running === false || vm.matchup.final === true">Increment</button>
-                    </span>
-                </div>
-            </div>
-        </form>
+        
+        <score-input class="inc-score col-xs-4" ng-hide="vm.inModal === true"
+                    score='vm.matchup.home_score' 
+                    sport='vm.matchup.sport' 
+                    on-score-change='vm.incrementScore' 
+                    home-or-away='vm.HOME'
+                    score-editable='vm.editable === false || 
+                                    vm.matchup.timer_running === false || 
+                                    vm.matchup.final === true'></score-input>
     </div>
     <div class='matchup-team-container'>
         <team name='vm.matchup.awayTeam.name' 
@@ -35,24 +28,14 @@
               editable='vm.teamsEditable'
               sport="vm.matchup.sport"
               class="col-xs-4"></team>
-        <form class="inc-score col-xs-4" ng-hide="vm.inModal === true">
-            <div class="form-group">
-                <label for="team_score">Score</label>
-                <div class='input-group'>
-                    <input type="number" class="form-control score-text" id="team_score" placeholder="Score" 
-                            ng-model='vm.matchup.away_score'
-                            ng-change='vm.setScore("vm.AWAY")'
-                            ng-readonly="vm.editable === false ||
-                                         vm.matchup.timer_running === false || 
-                                         vm.matchup.final === true">
-                    <span class='input-group-btn' ng-show='vm.editable === true'>
-                        <button type='button' class="btn btn-secondary" ng-click="vm.incrementScore(vm.AWAY, 1)" 
-                                                                        ng-disabled="vm.matchup.timer_running === false || vm.matchup.final === true">Increment</button>
-                    </span>
-                </div>
-                <p class="help-block" ng-show="vm.matchup.timer_running === false">Match is currently paused</p>
-            </div>
-        </form>
+        <score-input class="inc-score col-xs-4" ng-hide="vm.inModal === true"
+                    score='vm.matchup.away_score' 
+                    sport='vm.matchup.sport' 
+                    on-score-change='vm.incrementScore' 
+                    home-or-away='vm.AWAY'
+                    score-editable='vm.editable === false || 
+                                    vm.matchup.timer_running === false || 
+                                    vm.matchup.final === true'></score-input>
     </div>
    <div id="timer-container" ng-hide="vm.inModal === true">
         <timer countdown-start='vm.matchup.match_time' 

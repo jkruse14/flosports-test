@@ -77,7 +77,7 @@ team,.matchup-team-container,.inc-score{
   width: 55%;
 }
 
-sportpicker > div > .dropdown-menu{
+sport-picker > div > .dropdown-menu{
   overflow-y: auto;
   max-height: 400px;
   margin-top: 0px;
@@ -94,6 +94,10 @@ sportpicker > div > .dropdown-menu{
 
 .dropdown-menu-sublist {
   list-style: none;
+}
+
+score-input > div > .input-group-btn > .scoring-btn {
+  font-variant: small-caps;
 }
 
 /*** color picker ***/
